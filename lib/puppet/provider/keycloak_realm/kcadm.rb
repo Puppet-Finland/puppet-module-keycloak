@@ -16,6 +16,23 @@ Puppet::Type.type(:keycloak_realm).provide(:kcadm, parent: Puppet::Provider::Key
     ]
   end
 
+  def self.smtp_server_properties
+    [
+      :smtp_server_user,
+      :smtp_server_password,
+      :smtp_server_host,
+      :smtp_server_port,
+      :smtp_server_auth,
+      :smtp_server_starttls,
+      :smtp_server_ssl,
+      :smtp_server_envelope_from,
+      :smtp_server_from,
+      :smtp_server_from_display_name,
+      :smtp_server_reply_to,
+      :smtp_server_reply_to_display_name,
+    ]
+  end
+
   def self.browser_security_headers
     [
       :content_security_policy,
@@ -85,6 +102,8 @@ Puppet::Type.type(:keycloak_realm).provide(:kcadm, parent: Puppet::Provider::Key
                   events_config[camelize(property)]
                 elsif browser_security_headers.include?(property)
                   d['browserSecurityHeaders'][camelize(property)]
+                elsif smtp_server_properties.include?(property)
+                  d['smtpServer'][camelize(property.to_s.gsub(%r{smtp_server_}, ''))]
                 else
                   d[camelize(property)]
                 end
@@ -114,6 +133,7 @@ Puppet::Type.type(:keycloak_realm).provide(:kcadm, parent: Puppet::Provider::Key
 
   def create
     data = {}
+    data['smtpServer'] = {}
     events_config = {}
     data[:id] = resource[:id]
     data[:realm] = resource[:name]
@@ -123,11 +143,15 @@ Puppet::Type.type(:keycloak_realm).provide(:kcadm, parent: Puppet::Provider::Key
       if self.class.browser_security_headers.include?(property) && !data.key?('browserSecurityHeaders')
         data['browserSecurityHeaders'] = {}
       end
+      if self.class.smtp_server_properties.include?(property)
+        data['smtpServer'][camelize(property.to_s.gsub(%r{smtp_server_}, ''))] = resource[property] if resource[property]
+      end
       if property.to_s =~ %r{events}
         events_config[camelize(property)] = convert_property_value(resource[property.to_sym])
       elsif resource[property.to_sym]
         if self.class.browser_security_headers.include?(property)
           data['browserSecurityHeaders'][camelize(property)] = convert_property_value(resource[property.to_sym])
+        elsif self.class.smtp_server_properties.include?(property)
         else
           data[camelize(property)] = convert_property_value(resource[property.to_sym])
         end
@@ -234,6 +258,7 @@ Puppet::Type.type(:keycloak_realm).provide(:kcadm, parent: Puppet::Provider::Key
   def flush
     unless @property_flush.empty?
       data = {}
+      data['smtpServer'] = {}
       events_config = {}
       type_properties.each do |property|
         next if [:default_client_scopes, :optional_client_scopes].include?(property)
@@ -244,9 +269,13 @@ Puppet::Type.type(:keycloak_realm).provide(:kcadm, parent: Puppet::Provider::Key
         if self.class.browser_security_headers.include?(property) && !data.key?('browserSecurityHeaders')
           data['browserSecurityHeaders'] = {}
         end
+        if self.class.smtp_server_properties.include?(property)
+          data['smtpServer'][camelize(property.to_s.gsub(%r{smtp_server_}, ''))] = resource[property] if resource[property]
+        end
         if @property_flush[property.to_sym] # || resource[property.to_sym]
           if self.class.browser_security_headers.include?(property)
             data['browserSecurityHeaders'][camelize(property)] = convert_property_value(resource[property.to_sym])
+          elsif self.class.smtp_server_properties.include?(property)
           else
             data[camelize(property)] = convert_property_value(resource[property.to_sym])
           end

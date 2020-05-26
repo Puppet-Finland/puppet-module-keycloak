@@ -24,5 +24,5 @@ package { 'git':
 
 file { '/etc/puppetlabs/code/environments/production/modules/keycloak':
   ensure => 'link',
-  target => "${::basedir}",
+  target => $::basedir,
 }

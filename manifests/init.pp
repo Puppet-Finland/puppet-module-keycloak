@@ -65,6 +65,10 @@
 # @param admin_user_password
 #   Keycloak administrative user password.
 #   Default is `changeme`.
+# @param wildfly_user
+#   Wildfly user. Required for domain mode.
+# @param wildfly_user_password
+#   Wildfly user password. Required for domain mode.
 # @param manage_datasource
 #   Boolean that determines if configured datasource will be managed.
 #   Only applies when `datasource_driver` is `mysql`.

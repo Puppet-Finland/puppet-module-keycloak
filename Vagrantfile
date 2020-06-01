@@ -99,7 +99,7 @@ Vagrant.configure(2) do |config|
     end
     box.vm.provision "shell" do |s|
       s.path = "vagrant/run_puppet.sh"
-      s.args = ["-b", "/vagrant", "-m", "prepare.pp dc.pp", "-d", "true"]
+      s.args = ["-b", "/vagrant", "-m", "prepare.pp dc.pp"]
     end
   end
   
@@ -124,7 +124,7 @@ Vagrant.configure(2) do |config|
     end
     box.vm.provision "shell" do |s|
       s.path = "vagrant/run_puppet.sh"
-      s.args = ["-b", "/vagrant", "-m", "prepare.pp hc.pp" ]
+      s.args = ["-b", "/vagrant", "-m", "prepare.pp hc.pp"]
     end
   end
   
@@ -149,32 +149,7 @@ Vagrant.configure(2) do |config|
     end
     box.vm.provision "shell" do |s|
       s.path = "vagrant/run_puppet.sh"
-      s.args = ["-b", "/vagrant", "-m", "prepare.pp lb.pp" ]
-    end
-  end
-
-  config.vm.define "sp" do |box|
-    box.vm.box = "centos/7"
-    box.vm.box_version = "1901.01"
-    box.vm.hostname = 'sp.local'
-    box.vm.synced_folder ".", "/vagrant", type: "virtualbox"
-    box.hostmanager.manage_guest = true
-    box.hostmanager.aliases = %w(sp)
-    box.vm.network "private_network", ip: "192.168.0.250"
-    box.vm.provider 'virtualbox' do |vb|
-      vb.linked_clone = true
-      vb.gui = false
-      vb.memory = 1024
-      vb.customize ["modifyvm", :id, "--ioapic", "on"]
-      vb.customize ["modifyvm", :id, "--hpet", "on"]
-      vb.customize ["modifyvm", :id, "--audio", "none"]
-    end
-    box.vm.provision "shell" do |s|
-      s.path = "vagrant/install_agent.sh"
-    end
-    box.vm.provision "shell" do |s|
-      s.path = "vagrant/run_puppet.sh"
-      s.args = ["-b", "/vagrant", "-m", "prepare.pp sp.pp" ]
+      s.args = ["-b", "/vagrant", "-m", "prepare.pp lb.pp"]
     end
   end
 end

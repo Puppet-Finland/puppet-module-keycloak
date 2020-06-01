@@ -1,2 +1,0 @@
-notify { 'Installing Service Provider': }
-

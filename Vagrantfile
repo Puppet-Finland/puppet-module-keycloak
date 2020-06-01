@@ -99,7 +99,7 @@ Vagrant.configure(2) do |config|
     end
     box.vm.provision "shell" do |s|
       s.path = "vagrant/run_puppet.sh"
-      s.args = ["-b", "/vagrant", "-m", "prepare.pp dc.pp" ]
+      s.args = ["-b", "/vagrant", "-m", "prepare.pp dc.pp", "-d", "true"]
     end
   end
   

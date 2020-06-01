@@ -16,5 +16,6 @@ mod 'puppetlabs-haproxy'
 mod 'puppetlabs-concat'
 mod 'puppetlabs-translate'
 mod 'puppetlabs-apt'
+mod 'puppetlabs-augeas_core'
 
 

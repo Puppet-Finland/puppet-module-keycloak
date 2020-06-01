@@ -13,6 +13,7 @@ usage() {
     echo " -b   Base directory for dependency Puppet modules installed by"
     echo "      librarian-puppet."
     echo " -m   Puppet manifests to run. Put them in the provision folder"
+    echo " -d  Turn on debugging"
     exit 1
 }
 
@@ -23,10 +24,11 @@ if [ "$1" = "" ]; then
     usage
 fi
 
-while getopts "b:m:h" options; do
+while getopts "b:m:h:d:" options; do
     case $options in
         b ) BASEDIR=$OPTARG;;
 	m ) MANIFESTS=$OPTARG;;
+        d ) DEBUG=$OPTARG;;
         h ) usage;;
         \? ) usage;;
         * ) usage;;
@@ -36,10 +38,14 @@ done
 CWD=`pwd`
 
 # Configure with "puppet apply"
-PUPPET_APPLY="/opt/puppetlabs/bin/puppet apply --verbose" 
+if [ "$DEBUG" == "true" ]; then
+    PUPPET_APPLY="/opt/puppetlabs/bin/puppet apply --verbose --debug --trace --summarize" 
+else
+    PUPPET_APPLY="/opt/puppetlabs/bin/puppet apply"
+fi
 
 # Pass variables to Puppet manifests via environment variables
-export FACTER_profile='/etc/profile.d/openvpn.sh'
+export FACTER_profile='/etc/profile.d/myprofile.sh'
 export FACTER_basedir="$BASEDIR"
 export FACTER_keycloak_version='10.0.1'
 export FACTER_keycloak_datasource_host='db.local'

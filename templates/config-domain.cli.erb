@@ -47,7 +47,6 @@ try
 catch
 /profile=auth-server-standalone/subsystem=datasources/jdbc-driver=postgresql:remove
 /profile=auth-server-standalone/subsystem=datasources/jdbc-driver=postgresql:add(driver-module-name=org.postgresql,driver-name=postgresql,driver-xa-datasource-class-name=org.postgresql.xa.PGXADataSource)
-
 end-try
 
 <%- if scope['keycloak::truststore'] -%>
@@ -68,8 +67,6 @@ end-if
 /profile=auth-server-standalone/subsystem=keycloak-server/theme=defaults/:write-attribute(name=staticMaxAge, value=<%= scope['keycloak::theme_static_max_age'] %>)
 /profile=auth-server-standalone/subsystem=keycloak-server/theme=defaults/:write-attribute(name=cacheThemes, value=<%= scope['keycloak::theme_cache_themes'] %>)
 /profile=auth-server-standalone/subsystem=keycloak-server/theme=defaults/:write-attribute(name=cacheTemplates, value=<%= scope['keycloak::theme_cache_templates'] %>)
-/profile=auth-server-standalone/subsystem=deployment-scanner/scanner=default:write-attribute(name="auto-deploy-exploded",value=<%= scope['keycloak::auto_deploy_exploded'] %>)
-/profile=auth-server-standalone/subsystem=deployment-scanner/scanner=default:write-attribute(name="auto-deploy-zipped",value=<%= scope['keycloak::auto_deploy_zipped'] %>)
 
 try
 /profile=auth-server-standalone/subsystem=keycloak-server/spi=userCache/provider=default/:add(enabled=<%= scope['keycloak::user_cache']%>)

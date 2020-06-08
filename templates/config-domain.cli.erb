@@ -54,7 +54,7 @@ if (outcome != success) of /profile=auth-server-standalone/subsystem=keycloak-se
 /profile=auth-server-standalone/subsystem=keycloak-server/spi=truststore/:add
 /profile=auth-server-standalone/subsystem=keycloak-server/spi=truststore/provider=file/:add(enabled=true)
 end-if
-/profile=auth-server-standalone/subsystem=keycloak-server/spi=truststore/provider=file/:map-put(name=properties,key=file,value=<%= scope['keycloak::install_base'] %>/standalone/configuration/truststore.jks)
+/profile=auth-server-standalone/subsystem=keycloak-server/spi=truststore/provider=file/:map-put(name=properties,key=file,value=<%= scope['keycloak::install_base'] %>/domain/configuration/truststore.jks)
 /profile=auth-server-standalone/subsystem=keycloak-server/spi=truststore/provider=file/:map-put(name=properties,key=password,value=<%= scope['keycloak::truststore_password'] %>)
 /profile=auth-server-standalone/subsystem=keycloak-server/spi=truststore/provider=file/:map-put(name=properties,key=hostname-verification-policy,value=<%= scope['keycloak::truststore_hostname_verification_policy'] %>)
 /profile=auth-server-standalone/subsystem=keycloak-server/spi=truststore/provider=file/:map-put(name=properties,key=disabled,value=false)

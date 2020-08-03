@@ -60,17 +60,19 @@ define keycloak::freeipa_ldap_mappers
       user_model_attribute => 'username',
     ;
     ["modify date ${title_suffix}"]:
-      is_mandatory_in_ldap => 'false',
+      is_mandatory_in_ldap => false,
       ldap_attribute       => 'modifyTimestamp',
       user_model_attribute => 'modifyTimestamp',
     ;
     ["creation date ${title_suffix}"]:
-      is_mandatory_in_ldap => 'false',
+      is_mandatory_in_ldap => false,
       ldap_attribute       => 'createTimestamp',
       user_model_attribute => 'createTimestamp',
     ;
   }
 
+  /*
+  
   keycloak_ldap_mapper { "roles ${title_suffix}":
     ensure                         => 'present',
     type                           => 'role-ldap-mapper',
@@ -88,10 +90,10 @@ define keycloak::freeipa_ldap_mappers
     user_roles_retrieve_strategy   => 'LOAD_ROLES_BY_MEMBER_ATTRIBUTE',
   }
 
-  /*
-
-  keycloak_ldap_mapper { "groups ${title_suffix}":
+  */
+  keycloak_ldap_mapper { 'groups':
     ensure                               => 'present',
+    type                                 => 'group-ldap-mapper',
     is_mandatory_in_ldap                 => false,
     mode                                 => 'READ_ONLY',
     memberof_ldap_attribute              => 'memberOf',
@@ -103,9 +105,9 @@ define keycloak::freeipa_ldap_mappers
     membership_attribute_type            => 'DN',
     membership_ldap_attribute            => 'member',
     membership_user_ldap_attribute       => 'uid',
-    preserve_group_inheritance           => 'false',
+    preserve_group_inheritance           => false,
     read_only                            => true,
     user_roles_retrieve_strategy         => 'LOAD_GROUPS_BY_MEMBER_ATTRIBUTE',
   }
-  */
+
 }

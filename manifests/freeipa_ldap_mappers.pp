@@ -73,6 +73,7 @@ define keycloak::freeipa_ldap_mappers
 
   keycloak_ldap_mapper { "roles ${title_suffix}":
     ensure                         => 'present',
+    type                           => 'role-ldap-mapper',
     is_mandatory_in_ldap           => false,
     mode                           => 'READ_ONLY',
     memberof_ldap_attribute        => 'memberOf',

@@ -71,8 +71,6 @@ define keycloak::freeipa_ldap_mappers
     ;
   }
 
-  /*
-
   keycloak_ldap_mapper { "roles ${title_suffix}":
     ensure                         => 'present',
     is_mandatory_in_ldap           => false,
@@ -88,6 +86,8 @@ define keycloak::freeipa_ldap_mappers
     use_realm_roles_mapping        => 'true',
     user_roles_retrieve_strategy   => 'LOAD_ROLES_BY_MEMBER_ATTRIBUTE',
   }
+
+  /*
 
   keycloak_ldap_mapper { "groups ${title_suffix}":
     ensure                               => 'present',

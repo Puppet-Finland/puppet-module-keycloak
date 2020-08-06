@@ -90,7 +90,6 @@ define keycloak::freeipa_ldap_mappers
     user_roles_retrieve_strategy   => 'LOAD_ROLES_BY_MEMBER_ATTRIBUTE',
   }
 
-  */
   keycloak_ldap_mapper { "groups ${title_suffix}":
     ensure                               => 'present',
     type                                 => 'group-ldap-mapper',
@@ -110,5 +109,5 @@ define keycloak::freeipa_ldap_mappers
     read_only                            => true,
     user_roles_retrieve_strategy         => 'LOAD_GROUPS_BY_MEMBER_ATTRIBUTE',
   }
-
+  */
 }

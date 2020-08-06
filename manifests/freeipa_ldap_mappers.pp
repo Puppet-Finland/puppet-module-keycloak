@@ -94,6 +94,7 @@ define keycloak::freeipa_ldap_mappers
   keycloak_ldap_mapper { "groups ${title_suffix}":
     ensure                               => 'present',
     type                                 => 'group-ldap-mapper',
+    ldap                                 => $ldap_provider_id,
     is_mandatory_in_ldap                 => false,
     mode                                 => 'READ_ONLY',
     memberof_ldap_attribute              => 'memberOf',

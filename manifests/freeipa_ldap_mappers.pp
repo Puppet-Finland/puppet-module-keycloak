@@ -40,9 +40,9 @@ define keycloak::freeipa_ldap_mappers
     default:
       ensure                      => 'present',
       ldap                        => $ldap,
-      always_read_value_from_ldap => 'true',
-      read_only                   => 'true',
-      is_mandatory_in_ldap        => 'true',
+      always_read_value_from_ldap => true,
+      read_only                   => true,
+      is_mandatory_in_ldap        => true,
     ;
     ["cn ${title_suffix}"]:
       ldap_attribute       => 'cn',
@@ -80,8 +80,6 @@ define keycloak::freeipa_ldap_mappers
     ;
   }
 
-  /*
-  
   keycloak_ldap_mapper { "roles ${title_suffix}":
     ensure                         => 'present',
     type                           => 'role-ldap-mapper',
@@ -96,7 +94,7 @@ define keycloak::freeipa_ldap_mappers
     role_name_ldap_attribute       => 'cn',
     role_object_classes            => 'posixGroup',
     roles_dn                       => $roles_dn,
-    use_realm_roles_mapping        => 'true',
+    use_realm_roles_mapping        => true,
     user_roles_retrieve_strategy   => 'LOAD_ROLES_BY_MEMBER_ATTRIBUTE',
   }
 
@@ -119,5 +117,4 @@ define keycloak::freeipa_ldap_mappers
     read_only                            => true,
     user_roles_retrieve_strategy         => 'LOAD_GROUPS_BY_MEMBER_ATTRIBUTE',
   }
-  */
 }

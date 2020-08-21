@@ -23,10 +23,10 @@
 #
 define keycloak::freeipa_ldap_mappers
 (
-  String $parent_name,
   String $realm,
   String $groups_dn,
   String $roles_dn,
+  String $parent_name = $title,
   String $ldap_provider_id = $title,
 )
 {

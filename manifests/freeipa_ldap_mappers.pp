@@ -5,10 +5,13 @@
 #   keycloak::freeipa_ldap_mappers { 'ipa.example.org':
 #     ldap_provider_id => '6bd0f68d-5618-a74d-bcab-089702f1bc80',
 #     realm            => 'EXAMPLE.ORG',
-#     groups_dn        => 'cn=groups,cn=accounts,dc=example,dc=org'
+#     groups_dn        => 'cn=groups,cn=accounts,dc=example,dc=org',
 #     roles_dn         => 'cn=groups,cn=accounts,dc=example,dc=org'
 #   }
 #
+# @param parent_name
+#   The name of the parent resource. Usually the title of the
+#   keycloak_ldap_provider.
 # @param realm
 #   Keycloak realm
 # @param groups_dn
@@ -20,6 +23,7 @@
 #
 define keycloak::freeipa_ldap_mappers
 (
+  String $parent_name,
   String $realm,
   String $groups_dn,
   String $roles_dn,
@@ -28,12 +32,17 @@ define keycloak::freeipa_ldap_mappers
 {
   $title_suffix = "for ${ldap_provider_id} on ${realm}"
 
+  # This translates to parentId in JSON and much be correct or hard-to-debug
+  # issues will ensue.
+  $ldap = "${parent_name}-${realm}"
+
   keycloak_ldap_mapper {
     default:
       ensure                      => 'present',
-      always_read_value_from_ldap => true,
-      read_only                   => true,
-      is_mandatory_in_ldap        => true,
+      ldap                        => $ldap,
+      always_read_value_from_ldap => 'true',
+      read_only                   => 'true',
+      is_mandatory_in_ldap        => 'true',
     ;
     ["cn ${title_suffix}"]:
       ldap_attribute       => 'cn',
@@ -76,6 +85,7 @@ define keycloak::freeipa_ldap_mappers
   keycloak_ldap_mapper { "roles ${title_suffix}":
     ensure                         => 'present',
     type                           => 'role-ldap-mapper',
+    ldap                           => $ldap,
     is_mandatory_in_ldap           => false,
     mode                           => 'READ_ONLY',
     memberof_ldap_attribute        => 'memberOf',
@@ -93,7 +103,7 @@ define keycloak::freeipa_ldap_mappers
   keycloak_ldap_mapper { "groups ${title_suffix}":
     ensure                               => 'present',
     type                                 => 'group-ldap-mapper',
-    ldap                                 => $ldap_provider_id,
+    ldap                                 => $ldap,
     is_mandatory_in_ldap                 => false,
     mode                                 => 'READ_ONLY',
     memberof_ldap_attribute              => 'memberOf',

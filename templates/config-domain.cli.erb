@@ -75,6 +75,23 @@ catch
 /profile=auth-server-standalone/subsystem=keycloak-server/spi=userCache/provider=default/:add(enabled=<%= scope['keycloak::user_cache']%>)
 end-try
 
+<%- if scope['keycloak::syslog'] -%>
+if (outcome != success) of /profile=auth-server-standalone/subsystem=logging/syslog-handler=SYSLOG:read-resource
+/profile=auth-server-standalone/subsystem=logging/syslog-handler=SYSLOG::add
+end-if
+/profile=auth-server-standalone/subsystem=logging/syslog-handler=SYSLOG/:write-attribute(name=app-name, value=<%= scope['keycloak::syslog_appname'] %>)
+/profile=auth-server-standalone/subsystem=logging/syslog-handler=SYSLOG/:write-attribute(name=facility, value=<%= scope['keycloak::syslog_facility'] %>)
+/profile=auth-server-standalone/subsystem=logging/syslog-handler=SYSLOG/:write-attribute(name=hostname, value=<%= scope['keycloak::syslog_hostname'] %>)
+/profile=auth-server-standalone/subsystem=logging/syslog-handler=SYSLOG/:write-attribute(name=level, value=<%= scope['keycloak::syslog_level'] %>)
+/profile=auth-server-standalone/subsystem=logging/syslog-handler=SYSLOG/:write-attribute(name=port, value=<%= scope['keycloak::syslog_port'] %>)
+/profile=auth-server-standalone/subsystem=logging/syslog-handler=SYSLOG/:write-attribute(name=server-address, value=<%= scope['keycloak::syslog_server_address'] %>)
+/profile=auth-server-standalone/subsystem=logging/syslog-handler=SYSLOG/:write-attribute(name=syslog-format, value=<%= scope['keycloak::syslog_format'] %>)
+try
+/profile=auth-server-standalone/subsystem=logging/root-logger=ROOT:add-handler(name=SYSLOG)
+catch
+/profile=auth-server-standalone/subsystem=logging/root-logger=ROOT:remove-handler(name=SYSLOG)                                                                                   /profile=auth-server-standalone/subsystem=logging/root-logger=ROOT:add-handler(name=SYSLOG)      
+end-try
+<%- end -%>
 
 /server-group=auth-server-group:write-attribute(name=profile, value=auth-server-standalone)
 

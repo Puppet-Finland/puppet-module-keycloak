@@ -101,3 +101,12 @@ catch
 /subsystem=logging/root-logger=ROOT:add-handler(name=SYSLOG)
 end-try
 <%- end -%>
+<%- if scope['keycloak::syslog_audit_logging'] -%>
+if (result != true) of /host=master/core-service=management/access=audit/server-logger=audit-log:read-attribute(name=enabled)
+/host=master/core-service=management/access=audit/logger=audit-log:write-attribute(name=enabled,value=true)
+end-if
+batch
+/host=master/core-service=management/access=audit/syslog-handler=mysyslog:add(formatter=json-formatter)
+/host=master/core-service=management/access=audit/syslog-handler=mysyslog/protocol=udp:add(host=<%= scope['keycloak::syslog_server_address'] %>,port=<%= scope['keycloak::syslog_port'] %>)
+run-batch
+<%- end -%>

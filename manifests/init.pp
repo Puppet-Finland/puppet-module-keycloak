@@ -226,8 +226,10 @@
 #   The port the syslog server is listening on.
 # @syslog_server_address
 #   The address of the syslog server.
-# @syslog-format
+# @syslog_format
 #   Syslog message format. Either 'RFC5424' or 'RFC3164'. Defaults to 'RFC3164'.
+# @syslog_audit_logging
+#   Log audit logs to syslog. Default false.
 class keycloak (
   Boolean $manage_install       = true,
   String $version               = '8.0.1',
@@ -321,6 +323,7 @@ class keycloak (
   String $syslog_port = '514',
   String $syslog_server_address = 'localhost',
   Enum['RFC3164', 'RFC5424'] $syslog_format = 'RFC3164',
+  Boolean $syslog_audit_logging = false,
 ) {
 
   if ! ($facts['os']['family'] in ['RedHat','Debian']) {

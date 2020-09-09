@@ -83,7 +83,6 @@ catch
 /subsystem=keycloak-server/spi=userCache/provider=default/:remove
 /subsystem=keycloak-server/spi=userCache/provider=default/:add(enabled=<%= scope['keycloak::user_cache']%>)
 end-try
-
 <%- if scope['keycloak::syslog'] -%>
 if (outcome != success) of /subsystem=logging/syslog-handler=SYSLOG:read-resource
 /profile=auth-server-standalone/subsystem=logging/syslog-handler=SYSLOG::add
@@ -98,6 +97,7 @@ end-if
 try
 /subsystem=logging/root-logger=ROOT:add-handler(name=SYSLOG)
 catch
-/subsystem=logging/root-logger=ROOT:remove-handler(name=SYSLOG)                                                                                   /profile=auth-server-standalone/subsystem=logging/root-logger=ROOT:add-handler(name=SYSLOG)
+/subsystem=logging/root-logger=ROOT:remove-handler(name=SYSLOG)
+/subsystem=logging/root-logger=ROOT:add-handler(name=SYSLOG)
 end-try
 <%- end -%>

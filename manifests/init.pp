@@ -213,7 +213,7 @@
 # @param server_name
 #   Server name in domain mode. Defaults to hostname.
 # @param syslog
-#   Enable syslog. Default false. 
+#   Enable syslog. Default false.
 # @param syslog_app_name
 #   The app name used when formatting the message in RFC5424 format. Default 'keycloak'.
 # @param syslog_facility

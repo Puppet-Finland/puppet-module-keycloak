@@ -89,7 +89,8 @@ end-if
 try
 /profile=auth-server-standalone/subsystem=logging/root-logger=ROOT:add-handler(name=SYSLOG)
 catch
-/profile=auth-server-standalone/subsystem=logging/root-logger=ROOT:remove-handler(name=SYSLOG)                                                                                   /profile=auth-server-standalone/subsystem=logging/root-logger=ROOT:add-handler(name=SYSLOG)      
+/profile=auth-server-standalone/subsystem=logging/root-logger=ROOT:remove-handler(name=SYSLOG)
+/profile=auth-server-standalone/subsystem=logging/root-logger=ROOT:add-handler(name=SYSLOG)      
 end-try
 <%- end -%>
 

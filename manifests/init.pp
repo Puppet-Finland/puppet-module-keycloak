@@ -212,7 +212,22 @@
 #   IP address of the master in domain mode
 # @param server_name
 #   Server name in domain mode. Defaults to hostname.
-#
+# @param syslog
+#   Enable syslog. Default false.
+# @param syslog_app_name
+#   The app name used when formatting the message in RFC5424 format. Default 'keycloak'.
+# @param syslog_facility
+#   Facility as defined by RFC-5424. Default 'user-level'.
+# @syslog_hostname
+#   The name of the host the messages are being sent from.
+# @syslog_level
+#   The log level specifying which message levels will be logged by this logger.
+# @syslog_port
+#   The port the syslog server is listening on.
+# @syslog_server_address
+#   The address of the syslog server.
+# @syslog-format
+#   Syslog message format. Either 'RFC5424' or 'RFC3164'. Defaults to 'RFC3164'.
 class keycloak (
   Boolean $manage_install       = true,
   String $version               = '8.0.1',

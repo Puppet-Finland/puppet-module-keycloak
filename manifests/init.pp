@@ -312,7 +312,15 @@ class keycloak (
   Boolean $auto_deploy_zipped = true,
   Hash $spi_deployments = {},
   Optional[Stdlib::IP::Address] $master_address = undef,
-  String $server_name = $facts['hostname']
+  String $server_name = $facts['hostname'],
+  Boolean $syslog = false,
+  String $syslog_app_name = 'keycloak',
+  String $syslog_facility = 'user-level',
+  String $syslog_hostname = '127.0.0.1',
+  String $syslog_level = 'INFO',
+  String $syslog_port = '514',
+  String $syslog_server_address = 'localhost',
+  Enum['RFC3164', 'RFC5424'] $syslog_format = 'RFC3164',
 ) {
 
   if ! ($facts['os']['family'] in ['RedHat','Debian']) {

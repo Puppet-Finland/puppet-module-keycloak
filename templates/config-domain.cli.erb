@@ -79,7 +79,7 @@ end-try
 if (outcome != success) of /profile=auth-server-standalone/subsystem=logging/syslog-handler=SYSLOG:read-resource
 /profile=auth-server-standalone/subsystem=logging/syslog-handler=SYSLOG:add
 end-if
-/profile=auth-server-standalone/subsystem=logging/syslog-handler=SYSLOG/:write-attribute(name=app-name, value=<%= scope['keycloak::syslog_appname'] %>)
+/profile=auth-server-standalone/subsystem=logging/syslog-handler=SYSLOG/:write-attribute(name=app-name, value=<%= scope['keycloak::syslog_app_name'] %>)
 /profile=auth-server-standalone/subsystem=logging/syslog-handler=SYSLOG/:write-attribute(name=facility, value=<%= scope['keycloak::syslog_facility'] %>)
 /profile=auth-server-standalone/subsystem=logging/syslog-handler=SYSLOG/:write-attribute(name=hostname, value=<%= scope['keycloak::syslog_hostname'] %>)
 /profile=auth-server-standalone/subsystem=logging/syslog-handler=SYSLOG/:write-attribute(name=level, value=<%= scope['keycloak::syslog_level'] %>)

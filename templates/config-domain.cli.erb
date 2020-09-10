@@ -102,7 +102,9 @@ batch
 /host=master/core-service=management/access=audit/syslog-handler=mysyslog:add(formatter=json-formatter)
 /host=master/core-service=management/access=audit/syslog-handler=mysyslog/protocol=udp:add(host=<%= scope['keycloak::syslog_server_address'] %>,port=<%= scope['keycloak::syslog_port'] %>)
 run-batch
-/host=master/core-service=management/access=audit/logger=audit-log/handler=mysyslog:add
+if (outcome != success) of /host=master/core-service=management/access=audit/logger=audit-log/handler=mysyslog
+/host=master/core-service=management/access=audit/logger=audit-log/handler=mysyslog/:add
+end-if
 <%- end -%>
 
 /server-group=auth-server-group:write-attribute(name=profile, value=auth-server-standalone)

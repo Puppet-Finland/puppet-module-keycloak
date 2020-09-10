@@ -77,7 +77,7 @@ end-try
 
 <%- if scope['keycloak::syslog'] -%>
 if (outcome != success) of /profile=auth-server-standalone/subsystem=logging/syslog-handler=SYSLOG:read-resource
-/profile=auth-server-standalone/subsystem=logging/syslog-handler=SYSLOG::add
+/profile=auth-server-standalone/subsystem=logging/syslog-handler=SYSLOG:add
 end-if
 /profile=auth-server-standalone/subsystem=logging/syslog-handler=SYSLOG/:write-attribute(name=app-name, value=<%= scope['keycloak::syslog_appname'] %>)
 /profile=auth-server-standalone/subsystem=logging/syslog-handler=SYSLOG/:write-attribute(name=facility, value=<%= scope['keycloak::syslog_facility'] %>)

@@ -68,6 +68,8 @@ jobs:
           - "12.0.1"
         keycloak_full:
           - "no"
+        keycloak_domain_mode_cluster:
+          - "no"
         include:
           - set: "centos-7"
             puppet: "puppet5"

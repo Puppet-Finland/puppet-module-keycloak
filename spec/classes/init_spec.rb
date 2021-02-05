@@ -39,11 +39,8 @@ describe 'keycloak' do
 
         it { is_expected.to compile.with_all_deps }
         it do
-          is_expected.to contain_augeas('ensure-servername').with(incl: '/opt/keycloak-x/domain/configuration/host-master.xml',
-                                                                  context: '/files/opt/keycloak-x/domain/configuration/host-master.xml/host/servers')
+          is_expected.to contain_augeas('ensure-servername').with(incl: '/opt/keycloak-x/domain/configuration/host-master.xml')
         end
-        #it { is_expected.to contain_file('/opt/keycloak-x/config-domain.cli').with(notify: 'Exec[jboss-cli.sh --file=config-domain.cli]') }
-        #it { is_expected.to contain_exec('jboss-cli.sh --file=config-domain.cli').with(command: '/opt/keycloak-x/bin/jboss-cli.sh --file=config-domain.cli') }
       end
 
       context 'domain slave' do
@@ -65,7 +62,6 @@ describe 'keycloak' do
           is_expected.to contain_augeas('ensure-servername').with(incl: '/opt/keycloak-x/domain/configuration/host-slave.xml',
                                                                   context: '/files/opt/keycloak-x/domain/configuration/host-slave.xml/host/servers')
         end
-        #it { is_expected.to contain_file('/opt/keycloak-x/config-domain.cli') }
       end
 
       context 'standalone with domain role defined' do

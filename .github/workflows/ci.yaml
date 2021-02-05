@@ -133,3 +133,4 @@ jobs:
           BEAKER_set: ${{ matrix.set }}
           BEAKER_keycloak_version: ${{ matrix.keycloak_version }}
           BEAKER_keycloak_full: ${{ matrix.keycloak_full }}
+          BEAKER_keycloak_domain_mode_cluster: ${{ matrix.keycloak_domain_mode_cluster }}
